@@ -20,6 +20,7 @@ injector = "^0.21.0"
 pyjwt = "^2.8.0"
 sqlalchemy = "^2.0.23"
 pydantic = {extras = ["email"], version = "^2.5.2"}
+APScheduler = "^3.10.4"
 requests = "^2.31.0"
 types-requests = "^2.31.0.10"
 
