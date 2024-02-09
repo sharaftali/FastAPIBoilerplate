@@ -1,4 +1,5 @@
-import asyncio
+from contextlib import asynccontextmanager
+from typing import AsyncGenerator
 import logging
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
@@ -22,8 +23,17 @@ from src.user.di import UserModule
 
 log = logging.getLogger(__name__)
 
-
 injector = Injector([CoreModule(), UserModule()])
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
+    # scheduler.start()
+    log.debug("==============starting app==================")
+
+    yield
+    log.debug("================ending app==================")
+    # scheduler.shutdown()
 
 
 app = FastAPI(
@@ -41,6 +51,7 @@ app = FastAPI(
             "description": "Validation Error",
         },
     },
+    lifespan=lifespan,
 )
 attach_injector(app, injector)
 
